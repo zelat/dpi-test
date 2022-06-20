@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="master01 (48e016fa-dca6-4cdf-b7a9-6cc405ebf679)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.9T8PQsEJHv" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="neuvector (cb0d7efb-6c14-47cc-923f-f42ca248b11e)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="dpi-test" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-neuvector" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-neuvector" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="node01 (d977994e-b8ec-4fc4-b391-02b0c7cc4758)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="raspberry (12c8157f-20c5-4717-9406-0ef8fdaf792f)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
