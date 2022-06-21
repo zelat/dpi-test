@@ -1,2 +1,0 @@
-/usr/bin/ar qc libnetwork.a CMakeFiles/network.dir/base/Benchmark.cc.o CMakeFiles/network.dir/base/dpi_adapter.cc.o
-/usr/bin/ranlib libnetwork.a

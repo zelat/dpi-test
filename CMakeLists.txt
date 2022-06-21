@@ -11,6 +11,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -s" )
+#
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -s" )
+
 include(cmake/Modules/hyperscan-5.4.0.cmake)
 include(cmake/Modules/pcap-1.9.0.cmake)
 
@@ -28,6 +32,7 @@ target_sources(network
         PRIVATE
         "${CMAKE_SOURCE_DIR}/base/Benchmark.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_hs.cc"
         )
 target_link_libraries(network hs pcap)
 

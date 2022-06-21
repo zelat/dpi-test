@@ -1,1 +1,0 @@
-cmd='cd;/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0;&&;cmake;-DCMAKE_INSTALL_PREFIX=/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap;.;-DDISABLE_DBUS=ON;-DHAVE_LIBNL=FALSE;-DCMAKE_TOOLCHAIN_FILE=;-DBUILD_SHARED_LIBS=OFF'

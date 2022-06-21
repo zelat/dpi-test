@@ -1,3 +1,0 @@
-repository='external project URL'
-module='/root/dpi-test/third_party/hyperscan/hyperscan-5.4.0.zip'
-tag=''

@@ -1,3 +1,0 @@
-repository='external project URL'
-module='/root/dpi-test/third_party/pcap/libpcap-1.9.0.zip'
-tag=''
