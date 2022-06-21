@@ -1,0 +1,11 @@
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/lib64/pkgconfig/libhs.pc
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/include/hs/hs.h
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/include/hs/hs_common.h
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/include/hs/hs_compile.h
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/include/hs/hs_runtime.h
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/lib64/libhs_runtime.a
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/lib64/libhs.a
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/share/doc/hyperscan/examples/simplegrep.c
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/share/doc/hyperscan/examples/pcapscan.cc
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/share/doc/hyperscan/examples/patbench.cc
+/root/dpi-test/cmake-build-debug-neuvector/third_party/hyperscan/share/doc/hyperscan/examples/README.md

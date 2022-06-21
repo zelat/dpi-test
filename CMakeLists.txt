@@ -27,6 +27,7 @@ add_library(network "")
 target_sources(network
         PRIVATE
         "${CMAKE_SOURCE_DIR}/base/Benchmark.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
         )
 target_link_libraries(network hs pcap)
 

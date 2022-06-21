@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/pcap-1.9.0"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/pcap-1.9.0.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/pcap-1.9.0-complete.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-build.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-configure.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-download.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-install.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-mkdir.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-patch.rule"
+		},
+		{
+			"file" : "/root/dpi-test/cmake-build-debug-neuvector/third_party/pcap/src/pcap-1.9.0-stamp/pcap-1.9.0-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"pcap-1.9.0"
+		],
+		"name" : "pcap-1.9.0"
+	}
+}

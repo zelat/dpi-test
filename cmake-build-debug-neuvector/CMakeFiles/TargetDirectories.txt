@@ -1,0 +1,6 @@
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/rebuild_cache.dir
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/edit_cache.dir
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/hyperscan-5.4.0.dir
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/pcap-1.9.0.dir
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/dpi_test.dir
+/root/dpi-test/cmake-build-debug-neuvector/CMakeFiles/network.dir

@@ -1,0 +1,86 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "dpi_test",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "dpi_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dpi_test-Release-1026ae0fba72e2dac963.json",
+					"name" : "dpi_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hyperscan-5.4.0::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hyperscan-5.4.0-Release-c1e4f91a32e5f006472c.json",
+					"name" : "hyperscan-5.4.0",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "network::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-network-Release-2cb79f6a2bcca35b9e91.json",
+					"name" : "network",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pcap-1.9.0::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pcap-1.9.0-Release-d1dc5433e7d2afa5de2d.json",
+					"name" : "pcap-1.9.0",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/root/dpi-test/cmake-build-debug-neuvector",
+		"source" : "/root/dpi-test"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

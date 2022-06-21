@@ -4,6 +4,7 @@
 #include <vector>
 #include "base/Benchmark.h"
 #include "base/Clock.h"
+#include "base/dpi_adapter.h"
 
 #include <hs.h>
 #include <getopt.h>
@@ -17,7 +18,6 @@ using std::cerr;
 using std::string;
 using std::vector;
 using std::cout;
-
 
 static int test_calloc(){
     int * p = (int*) calloc(10, sizeof(int));
@@ -161,6 +161,14 @@ static void databaseFromFile(const char *filename, hs_database_t **db_block){
 }
 
 int main(int argc, char **argv) {
+    //获取网络设备
+    dpi_adapter dpi;
+    dpi.dpi_select_adapter();
+    dpi.dpi_open_adapter();
+
+
+
+    //hyeprscan测试
     const char * filename = argv[optind];
     const char * pcapFile = argv[optind + 1];
 
