@@ -24,6 +24,7 @@ Benchmark::~Benchmark() {
     hs_free_scratch(scratch);
 }
 
+
 //辅助函数，用于定位给定以太网帧中负载的第一个字节的偏移量。偏移量进入数据包，有效载荷的长度在参数@a偏移量和@a长度中返回。
 bool Benchmark::payloadOffset(const unsigned char *pkt_data, unsigned int *offset,
                           unsigned int *length) {

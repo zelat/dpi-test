@@ -51,7 +51,14 @@ int main(int argc, char **argv) {
     const char * pcapFile = argv[optind + 1];
 
     hs_database_t *db_block;
-    dpi_hs dpiHS(filename, &db_block);
+//    dpi_hs dpiHS(db_block);
+//    dpiHS.dpi_db_from_file(filename, &db_block);
+//
+//    dpiHS.dpi_free_db();
+
+
+
+
     // Read our input PCAP file in
     Benchmark bench(db_block);
     cout << "PCAP input file: " << pcapFile << endl;

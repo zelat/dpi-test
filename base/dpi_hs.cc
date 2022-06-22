@@ -4,7 +4,21 @@
 
 #include "dpi_hs.h"
 
-dpi_hs::dpi_hs(const char *filename, hs_database_t **db_block) {
+//分配scratch space
+dpi_hs::dpi_hs(const hs_database_t *block) {
+    hs_error_t err = hs_alloc_scratch(db_block, &scratch);
+    if (err != HS_SUCCESS){
+        cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
+        exit(-1);
+    }
+}
+
+//释放scratch space
+dpi_hs::~dpi_hs() {
+    hs_free_scratch(scratch);
+}
+
+void dpi_hs::dpi_db_from_file(const char *filename, hs_database_t **db_block) {
     vector<string> patterns;
     vector<unsigned> flags;
     vector<unsigned> ids;
@@ -32,14 +46,14 @@ dpi_hs::dpi_hs(const char *filename, hs_database_t **db_block) {
     cout << "Compiling Hyperscan databases with " << patterns.size()
     << " patterns." << endl;
 
-    *db_block = buildDatabase(cstrPatterns, flags, ids, HS_MODE_BLOCK);
+    *db_block = dpi_build_db(cstrPatterns, flags, ids, HS_MODE_BLOCK);
 }
 
-dpi_hs::~dpi_hs() {
+void dpi_hs::dpi_free_db() {
     hs_free_database(db_block);
 }
 
-hs_database_t *dpi_hs::buildDatabase(const vector<const char *> &expressions,
+hs_database_t *dpi_hs::dpi_build_db(const vector<const char *> &expressions,
                                     const vector<unsigned> flags,
                                     const vector<unsigned> ids,
                                     unsigned int mode){
@@ -137,3 +151,4 @@ unsigned dpi_hs::parseFlags(const string &flagsStr) {
     }
     return flags;
 }
+
