@@ -62,12 +62,7 @@ static void test_dpi_adapter(){
     dpi.dpi_open_adapter();
 }
 
-
-int main(int argc, char **argv) {
-    //设置线程互斥锁
-//    pthread_mutex_init(&g_debug_lock, NULL);
-//    rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
-
+static int  test_dpi_hyperscan(int argc, char **argv){
     //hyeprscan测试
     const char * filename = argv[optind];
     const char * pcapFile = argv[optind + 1];
@@ -111,4 +106,12 @@ int main(int argc, char **argv) {
     dpi_free_db(db_streaming);
 
     return 0;
+}
+
+int main(int argc, char **argv) {
+    //设置线程互斥锁
+    pthread_mutex_init(&g_debug_lock, NULL);
+    rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
+
+
 }
