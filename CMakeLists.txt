@@ -17,7 +17,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(cmake/Modules/hyperscan-5.4.0.cmake)
 include(cmake/Modules/pcap-1.9.0.cmake)
-include(cmake/Modules/userspace-urcu-0.13.1.cmake)
+include(cmake/Modules/userspace-rcu-0.13.1.cmake)
 
 #编译时候的选项
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -Wno-unused-result -Wno-unused-function -fstrict-aliasing -Wstrict-aliasing -g")

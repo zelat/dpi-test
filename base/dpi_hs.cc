@@ -18,6 +18,7 @@ dpi_hs::~dpi_hs() {
     hs_free_scratch(scratch);
 }
 
+//基于pattern file构建model database
 void dpi_hs::dpi_db_from_file(const char *filename, hs_database_t **db_block) {
     vector<string> patterns;
     vector<unsigned> flags;
