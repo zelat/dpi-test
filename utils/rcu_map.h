@@ -6,7 +6,6 @@
 #define DPI_TEST_RCU_MAP_H
 
 #include <stdint.h>
-#include <iostream>
 #include "urcu.h"
 #include "urcu/rculfhash.h"
 

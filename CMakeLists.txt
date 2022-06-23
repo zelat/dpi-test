@@ -41,7 +41,6 @@ target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_q
 add_library(network "")
 target_sources(network
         PRIVATE
-        "${CMAKE_SOURCE_DIR}/base/Benchmark.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs.cc"
         )

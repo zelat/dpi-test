@@ -8,13 +8,16 @@
 rcu_map_t *rcu_map_init(rcu_map_t *m, uint32_t buckets, int node_offset,
                         cds_lfht_match_fct match_func, rcu_map_hash_fct hash_func)
 {
+    //创建一个指向hashtable本身的指针
     struct cds_lfht *ht_map;
-
+    /*初始化hash table,为hash table分配内存空间
+     * @init_size:hash bucket的初始化数量
+     * @min_nr_alloc_buckets:最大hashtable bucket数量
+     * @max_nr_alloc_buckets:最小hashtable bucket数量*/
     ht_map = cds_lfht_new(buckets, buckets, 0, CDS_LFHT_AUTO_RESIZE | CDS_LFHT_ACCOUNTING, NULL);
     if (ht_map == NULL) {
         return NULL;
     }
-
     m->map = ht_map;
     m->match = match_func;
     m->hash = hash_func;
