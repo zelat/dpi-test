@@ -9,10 +9,10 @@
 #include "base/Clock.h"
 #include "base/dpi_adapter.h"
 #include "apis.h"
+#include "base/dpi_hs_db.h"
 
-#include <hs.h>
+#include "hs.h"
 #include <getopt.h>
-#include <pcap.h>
 #include <iomanip>
 #include <base/dpi_hs.h>
 
@@ -46,7 +46,6 @@ static int test_calloc(){
     return 0;
 }
 
-
 static int alloc_mem(){
     //设置资源限制
     struct rlimit core_limits;
@@ -63,13 +62,6 @@ static void test_dpi_adapter(){
     dpi.dpi_open_adapter();
 }
 
-static void test_dpi_hs(const char * filename, hs_database_t *db_streaming,  hs_database_t *db_block){
-    dpi_hs dpiHS(db_streaming, db_block);
-    dpiHS.dpi_db_from_file(filename, &db_streaming, &db_block);
-
-    dpiHS.dpi_free_db(db_streaming);
-    dpiHS.dpi_free_db(db_block);
-}
 
 int main(int argc, char **argv) {
     //设置线程互斥锁
@@ -80,14 +72,10 @@ int main(int argc, char **argv) {
     const char * filename = argv[optind];
     const char * pcapFile = argv[optind + 1];
 
-    hs_database_t *db_block;
-    hs_database_t *db_streaming;
+    hs_database_t *db_block, *db_streaming;
+    dpi_db_from_file(filename, &db_streaming, &db_block);
 
-    hs_scratch_t *scratch;
-    hs_error_t err = hs_alloc_scratch(db_streaming, &scratch);
     dpi_hs dpiHS(db_streaming, db_block);
-
-    dpiHS.dpi_db_from_file(filename, &db_streaming, &db_block);
     if (!dpiHS.dpi_read_streams(pcapFile)) {
         cerr << "Unable to read packets from PCAP file. Exiting." << endl;
         exit(-1);
@@ -119,8 +107,8 @@ int main(int argc, char **argv) {
              << "This test may have been too short to calculate accurate results." << endl;
     }
 
-    dpiHS.dpi_free_db(db_block);
-    dpiHS.dpi_free_db(db_streaming);
+    dpi_free_db(db_block);
+    dpi_free_db(db_streaming);
 
     return 0;
 }

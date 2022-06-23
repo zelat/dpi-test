@@ -91,10 +91,6 @@ private:
 public:
     dpi_hs(const hs_database_t *streaming, const hs_database_t *block);
     ~dpi_hs();
-    void dpi_db_from_file(const char *filename,hs_database_t **db_streaming, hs_database_t **db_block);
-    void dpi_free_db(hs_database_t *block);
-    unsigned parseFlags(const string &flagsStr);
-    int parseFile(const char * filename, vector<string> &patterns, vector<unsigned> &flags, vector<unsigned> &ids);
     bool dpi_read_streams(const char *pcapFile);
     bool dpi_payload_offset(const unsigned char *pkt_data, unsigned int *offset,unsigned int *length);
     size_t bytes() const;
@@ -105,6 +101,5 @@ public:
     void dpi_scan_streams();
     void dpi_scan_block();
     void dpi_display_stats();
-    hs_database_t * dpi_build_db(const vector<const char *> &expressions, const vector<unsigned> flags, const vector<unsigned> ids, unsigned int mode);
 };
 #endif //DPI_TEST_DPI_HS_H

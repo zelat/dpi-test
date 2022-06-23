@@ -43,6 +43,7 @@ target_sources(network
         PRIVATE
         "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_hs_db.cc"
         )
 target_link_libraries(network hs pcap)
 
