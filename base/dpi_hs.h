@@ -72,24 +72,27 @@ static int onMatch(unsigned int id, unsigned long long from, unsigned long long 
 
 class dpi_hs {
 private:
-    hs_database_t *db_block;
-    hs_database_t *db_streaming;
-    hs_scratch_t *scratch;
     // Packet data to be scanned.
     vector<string> packets;
     // The stream ID to which each packet belongs
     vector<size_t> stream_ids;
     // Map used to construct stream_ids
     unordered_map<FiveTuple, size_t, FiveTupleHash> stream_map;
+    // Hyperscan compiled database (streaming mode)
+    const hs_database_t *db_streaming;
+    // Hyperscan compiled database (block mode)
+    const hs_database_t *db_block;
+    // Hyperscan temporary scratch space (used in both modes)
+    hs_scratch_t *scratch;
     // Vector of Hyperscan stream state (used in streaming mode)
     vector<hs_stream_t *> streams;
     // Count of matches found during scanning
     size_t matchCount;
 public:
-    dpi_hs(const hs_database_t *block);
+    dpi_hs(const hs_database_t *streaming, const hs_database_t *block);
     ~dpi_hs();
-    void dpi_db_from_file(const char *filename, hs_database_t **db_block);
-    void dpi_free_db();
+    void dpi_db_from_file(const char *filename,hs_database_t **db_streaming, hs_database_t **db_block);
+    void dpi_free_db(hs_database_t *block);
     unsigned parseFlags(const string &flagsStr);
     int parseFile(const char * filename, vector<string> &patterns, vector<unsigned> &flags, vector<unsigned> &ids);
     bool dpi_read_streams(const char *pcapFile);

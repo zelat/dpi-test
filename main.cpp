@@ -63,11 +63,12 @@ static void test_dpi_adapter(){
     dpi.dpi_open_adapter();
 }
 
-static void test_dpi_hs(const char * filename,  hs_database_t *db_block){
-    dpi_hs dpiHS(db_block);
-    dpiHS.dpi_db_from_file(filename, &db_block);
+static void test_dpi_hs(const char * filename, hs_database_t *db_streaming,  hs_database_t *db_block){
+    dpi_hs dpiHS(db_streaming, db_block);
+    dpiHS.dpi_db_from_file(filename, &db_streaming, &db_block);
 
-    dpiHS.dpi_free_db();
+    dpiHS.dpi_free_db(db_streaming);
+    dpiHS.dpi_free_db(db_block);
 }
 
 int main(int argc, char **argv) {
@@ -75,21 +76,25 @@ int main(int argc, char **argv) {
 //    pthread_mutex_init(&g_debug_lock, NULL);
 //    rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
 
-
-
     //hyeprscan测试
     const char * filename = argv[optind];
     const char * pcapFile = argv[optind + 1];
 
     hs_database_t *db_block;
-    dpi_hs dpiHS(db_block);
-    dpiHS.dpi_db_from_file(filename, &db_block);
+    hs_database_t *db_streaming;
+
+    hs_scratch_t *scratch;
+    hs_error_t err = hs_alloc_scratch(db_streaming, &scratch);
+    dpi_hs dpiHS(db_streaming, db_block);
+
+    dpiHS.dpi_db_from_file(filename, &db_streaming, &db_block);
     if (!dpiHS.dpi_read_streams(pcapFile)) {
         cerr << "Unable to read packets from PCAP file. Exiting." << endl;
         exit(-1);
     }
-    Clock clock;
     dpiHS.dpi_display_stats();
+    Clock clock;
+
     // Scan all our packets in block mode.
     dpiHS.clearMatches();
     clock.start();
@@ -114,7 +119,8 @@ int main(int argc, char **argv) {
              << "This test may have been too short to calculate accurate results." << endl;
     }
 
-    dpiHS.dpi_free_db();
+    dpiHS.dpi_free_db(db_block);
+    dpiHS.dpi_free_db(db_streaming);
 
     return 0;
 }

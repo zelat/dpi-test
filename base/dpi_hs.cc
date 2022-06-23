@@ -5,8 +5,17 @@
 #include "dpi_hs.h"
 
 //分配scratch space
-dpi_hs::dpi_hs(const hs_database_t *block) {
-    hs_error_t err = hs_alloc_scratch(db_block, &scratch);
+dpi_hs::dpi_hs(const hs_database_t *streaming, const hs_database_t *block)
+        : db_streaming(streaming), db_block(block), scratch(nullptr), matchCount(0){
+    cout << "START" << endl;
+    hs_error_t err = hs_alloc_scratch(db_streaming, &scratch);
+    cout << "End" << endl;
+    if (err != HS_SUCCESS) {
+        cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
+        exit(-1);
+    }
+
+    err = hs_alloc_scratch(db_block, &scratch);
     if (err != HS_SUCCESS){
         cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
         exit(-1);
@@ -19,7 +28,7 @@ dpi_hs::~dpi_hs() {
 }
 
 //基于pattern file构建model database
-void dpi_hs::dpi_db_from_file(const char *filename, hs_database_t **db_block) {
+void dpi_hs::dpi_db_from_file(const char *filename, hs_database_t **db_streaming, hs_database_t **db_block) {
     vector<string> patterns;
     vector<unsigned> flags;
     vector<unsigned> ids;
@@ -48,10 +57,11 @@ void dpi_hs::dpi_db_from_file(const char *filename, hs_database_t **db_block) {
     << " patterns." << endl;
 
     *db_block = dpi_build_db(cstrPatterns, flags, ids, HS_MODE_BLOCK);
+    *db_streaming = dpi_build_db(cstrPatterns, flags, ids, HS_MODE_STREAM);
 }
 
-void dpi_hs::dpi_free_db() {
-    hs_free_database(db_block);
+void dpi_hs::dpi_free_db(hs_database_t *block) {
+    hs_free_database(block);
 }
 
 hs_database_t *dpi_hs::dpi_build_db(const vector<const char *> &expressions,
