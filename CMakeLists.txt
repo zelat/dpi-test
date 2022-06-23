@@ -33,7 +33,7 @@ find_package (Threads)
 add_library(utils "")
 target_sources(utils
         PRIVATE
-        "${CMAKE_SOURCE_DIR}/utils/rcu_map.cc"
+        "${CMAKE_SOURCE_DIR}/utils/rcu_map.c"
         )
 target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_queue
 
