@@ -5,6 +5,7 @@
 #include "utils/rcu_map.h"
 #include "base.h"
 
+//初始化一个无锁的 RCU 保护的可调整大小的哈希表
 rcu_map_t *rcu_map_init(rcu_map_t *m, uint32_t buckets, int node_offset,
                         cds_lfht_match_fct match_func, rcu_map_hash_fct hash_func)
 {
@@ -25,6 +26,7 @@ rcu_map_t *rcu_map_init(rcu_map_t *m, uint32_t buckets, int node_offset,
     return m;
 }
 
+//销毁该哈希表
 int rcu_map_destroy(rcu_map_t *m)
 {
     return cds_lfht_destroy(m->map, NULL);

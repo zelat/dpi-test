@@ -6,20 +6,22 @@
 #include <errno.h>
 #include <vector>
 #include <sys/resource.h>
-#include "base/Clock.h"
-#include "base/dpi_adapter.h"
-#include "apis.h"
-#include "base/dpi_hs_db.h"
-
-#include "hs.h"
 #include <getopt.h>
 #include <iomanip>
-#include <base/dpi_hs.h>
+
+#include "base/Clock.h"
+#include "base/dpi_adapter.h"
+#include "base/dpi_hs_db.h"
+#include "base/dpi_hs.h"
+#include "utils/pcap.h"
+#include "apis.h"
+#include "hs.h"
 
 io_config_t g_config;
 pthread_mutex_t g_debug_lock;
 rcu_map_t g_ep_map;
-
+struct cds_list_head g_subnet4_list;
+struct cds_list_head g_subnet6_list;
 
 using std::ifstream;
 using std::endl;
@@ -109,9 +111,11 @@ static int  test_dpi_hyperscan(int argc, char **argv){
 }
 
 int main(int argc, char **argv) {
-    //设置线程互斥锁
+    //初始化线程互斥锁
     pthread_mutex_init(&g_debug_lock, NULL);
     rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
-
+    //Initalize subnet4 & subnet6 RCU LIST
+    CDS_LIST_HEAD(g_subnet4_list);
+    CDS_LIST_HEAD(g_subnet6_list);
 
 }

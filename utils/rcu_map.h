@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include "urcu.h"
+#include "urcu/list.h"
 #include "urcu/rculfhash.h"
 
 typedef uint32_t (*rcu_map_hash_fct)(const void *key);
