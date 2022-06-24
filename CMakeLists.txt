@@ -33,8 +33,8 @@ find_package (Threads)
 add_library(utils "")
 target_sources(utils
         PRIVATE
-        "${CMAKE_SOURCE_DIR}/utils/rcu_map.c"
-        "${CMAKE_SOURCE_DIR}/utils/pcap.c"
+        "${CMAKE_SOURCE_DIR}/utils/rcu_map.cc"
+        "${CMAKE_SOURCE_DIR}/utils/pcap.cc"
         )
 target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_queue
 
@@ -49,4 +49,5 @@ target_sources(network
 target_link_libraries(network hs pcap)
 
 add_executable(dpi_test main.cpp)
-target_link_libraries(dpi_test hs pcap network utils)
+target_link_libraries(dpi_test network utils)
+#target_link_libraries(dpi_test hs pcap network utils)

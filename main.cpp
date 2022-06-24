@@ -118,4 +118,5 @@ int main(int argc, char **argv) {
     CDS_LIST_HEAD(g_subnet4_list);
     CDS_LIST_HEAD(g_subnet6_list);
 
+    init_dummy_ep(&g_config.dummy_ep);
 }

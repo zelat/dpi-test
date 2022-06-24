@@ -7,8 +7,9 @@
 
 #include <netinet/in.h>
 #include <net/ethernet.h>
+//extern "C" {
 #include "utils/rcu_map.h"
-
+//}
 #define IFACE_NAME_LEN 32
 
 #define STATS_SLOTS 60
@@ -89,6 +90,22 @@ typedef struct io_mac_ {
             unicast:  1;
 } io_mac_t;
 
+typedef struct io_app_ {
+    struct cds_lfht_node node;
+    uint16_t port;
+    uint16_t proto;
+    uint16_t server;
+    uint16_t application;
+#define SERVER_VER_SIZE 32
+    char version[SERVER_VER_SIZE];
+    bool listen;
+    uint8_t ip_proto;
+#define APP_SRC_CTRL  1
+#define APP_SRC_DP    2
+    uint8_t src;
+} io_app_t;
+
+
 typedef struct dpi_config_ {
     bool enable_cksum;
     bool promisc;
@@ -98,15 +115,4 @@ typedef struct dpi_config_ {
 } io_config_t;
 
 
-static inline uint32_t sdbm_hash(register const uint8_t *a, register int len)
-{
-    register uint32_t hash = 0;
-
-    while (len > 0) {
-        hash = *a + (hash << 6) + (hash << 16) - hash;
-        a ++; len --;
-    }
-
-    return hash;
-}
 #endif //DPI_TEST_APIS_H
