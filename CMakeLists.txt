@@ -11,13 +11,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -s" )
-#
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -s" )
-
 include(cmake/Modules/hyperscan-5.4.0.cmake)
 include(cmake/Modules/pcap-1.9.0.cmake)
 include(cmake/Modules/userspace-rcu-0.13.1.cmake)
+include(cmake/Modules/jansson-2.14.cmake)
 
 #编译时候的选项
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -Wno-unused-result -Wno-unused-function -fstrict-aliasing -Wstrict-aliasing -g")
@@ -45,8 +42,9 @@ target_sources(network
         "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs_db.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_callback.cc"
         )
-target_link_libraries(network hs pcap)
+target_link_libraries(network hs pcap jansson)
 
 add_executable(dpi_test main.cpp)
 target_link_libraries(dpi_test network utils)

@@ -1,13 +1,13 @@
 #include <iostream>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
+#include <cstddef>
+#include <cstdio>
+#include <cstring>
+#include <cerrno>
 #include <vector>
 #include <sys/resource.h>
 #include <getopt.h>
 #include <iomanip>
+#include <hs.h>
 
 #include "base/Clock.h"
 #include "base/dpi_adapter.h"
@@ -15,13 +15,12 @@
 #include "base/dpi_hs.h"
 #include "utils/pcap.h"
 #include "apis.h"
-#include "hs.h"
 
 io_config_t g_config;
 pthread_mutex_t g_debug_lock;
 rcu_map_t g_ep_map;
-struct cds_list_head g_subnet4_list;
-struct cds_list_head g_subnet6_list;
+struct timeval g_now;
+time_t get_current_time();
 
 using std::ifstream;
 using std::endl;
@@ -110,6 +109,39 @@ static int  test_dpi_hyperscan(int argc, char **argv){
     return 0;
 }
 
+static inline int debug_ts(FILE *logfp)
+{
+    struct timeval now;
+    struct tm *tm;
+
+    if (g_now.tv_sec == 0) {
+        //gettimeofday(&now, NULL);
+        time_t t = get_current_time();
+        tm = localtime((const time_t *)&t);
+    } else {
+        now = g_now;
+        tm = localtime(&now.tv_sec);
+    }
+
+    return fprintf(logfp, "%04d-%02d-%02dT%02d:%02d:%02d|DEBU|%s|",
+                   tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
+                   tm->tm_hour, tm->tm_min, tm->tm_sec, THREAD_NAME);
+}
+
+static int debug_stdout(bool print_ts, const char *fmt, va_list args)
+{
+    int len = 0;
+
+    pthread_mutex_lock(&g_debug_lock);
+    if (print_ts) {
+        len = debug_ts(stdout);
+    }
+    len += vprintf(fmt, args);
+    pthread_mutex_unlock(&g_debug_lock);
+
+    return len;
+}
+
 int main(int argc, char **argv) {
     //初始化线程互斥锁
     pthread_mutex_init(&g_debug_lock, NULL);
@@ -119,4 +151,6 @@ int main(int argc, char **argv) {
     CDS_LIST_HEAD(g_subnet6_list);
 
     init_dummy_ep(&g_config.dummy_ep);
+    g_config.dummy_mac.ep = &g_config.dummy_ep;
+
 }

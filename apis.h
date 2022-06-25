@@ -1,5 +1,5 @@
 //
-// Created by Administrator on 2022/6/23.
+// Created by tanchao on 2022/6/23.
 //
 
 #ifndef DPI_TEST_APIS_H
@@ -7,11 +7,13 @@
 
 #include <netinet/in.h>
 #include <net/ethernet.h>
-//extern "C" {
 #include "utils/rcu_map.h"
-//}
-#define IFACE_NAME_LEN 32
 
+#define MAX_THREAD_NAME_LEN 32
+extern __thread int THREAD_ID;
+extern __thread char THREAD_NAME[MAX_THREAD_NAME_LEN];
+
+#define IFACE_NAME_LEN 32
 #define STATS_SLOTS 60
 #define STATS_INTERVAL 5 // in second
 #define STRUCT_OF(ptr, type, member) ((type *)((char *)(ptr) - offsetof(type, member)))
@@ -105,6 +107,16 @@ typedef struct io_app_ {
     uint8_t src;
 } io_app_t;
 
+typedef struct io_ctx_ {
+    void *dp_ctx;
+    uint32_t tick;
+    uint32_t stats_slot;
+    struct ether_addr ep_mac;
+    bool large_frame;
+    bool tap;
+    bool tc;
+    bool nfq;
+} io_ctx_t;
 
 typedef struct dpi_config_ {
     bool enable_cksum;
