@@ -7,6 +7,8 @@
 
 #include <netinet/in.h>
 #include <net/ethernet.h>
+#include <jansson.h>
+#include "defs.h"
 #include "utils/rcu_map.h"
 
 #define MAX_THREAD_NAME_LEN 32
@@ -117,6 +119,16 @@ typedef struct io_ctx_ {
     bool tc;
     bool nfq;
 } io_ctx_t;
+
+typedef struct io_callback_ {
+    int (*debug) (bool print_ts, const char *fmt, va_list args);
+    int (*send_packet) (io_ctx_t *ctx, uint8_t *data, int len);
+    int (*send_ctrl_json) (json_t *root);
+    int (*send_ctrl_binary) (void *buf, int len);
+    int (*threat_log) (DPMsgThreatLog *log);
+    int (*traffic_log) (DPMsgSession *log);
+    int (*connect_report) (DPMsgSession *log, int count_session, int count_violate);
+} io_callback_t;
 
 typedef struct dpi_config_ {
     bool enable_cksum;

@@ -12,7 +12,7 @@
 #include "defs.h"
 #include "apis.h"
 #include "jansson.h"
-#include "debug.h"
+#include "utils/debug.h"
 
 class dpi_callback {
 private:
