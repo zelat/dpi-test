@@ -6,6 +6,8 @@
 #include "pcap.h"
 #include "config.h"
 #include "debug.h"
+#include "timer_queue.h"
+#include "service/ctrl.h"
 
 int g_running; // dp是否running
 int g_dp_threads = 0 ; //初始化dp线程数
@@ -105,7 +107,10 @@ int net_run(const char *in_iface) {
         g_dp_threads = MAX_DP_THREADS;
     }
 
-    dp_ctrl_init_thread_data();
+    //获取线程数，一个cpu分配一个线程
+    std::cout << "g_dp_threads = " << g_dp_threads << std::endl;
 
+    ctrl ctrl;
+    ctrl.dp_ctrl_init_thread_data();
     return 0;
 }

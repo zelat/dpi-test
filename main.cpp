@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
 
     cout << "g_debug_levels = " << g_debug_levels << endl;
     int ret = net_run(g_in_iface);
-    cout << ret << endl;
+    cout << "ret = " << ret << endl;
     return ret;
 //    //初始化线程互斥锁
 //    pthread_mutex_init(&g_debug_lock, NULL);

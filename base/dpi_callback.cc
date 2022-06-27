@@ -3,13 +3,13 @@
 //
 
 #include "dpi_callback.h"
+#include "config.h"
 
 int dpi_callback::debug_ts(FILE *logfp) {
     struct timeval now;
     struct tm *tm;
 
     if (g_now.tv_sec == 0) {
-        //gettimeofday(&now, NULL);
         time_t t = get_current_time();
         tm = localtime((const time_t *)&t);
     } else {

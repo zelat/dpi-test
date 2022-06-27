@@ -23,7 +23,6 @@ private:
     struct timeval g_now;
     int g_ctrl_fd;
     struct sockaddr_un g_client_addr;
-    time_t get_current_time();
     int debug_ts(FILE *logfp);
 public:
     int debug(bool print_ts, const char *fmt, va_list args);

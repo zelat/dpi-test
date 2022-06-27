@@ -33,6 +33,7 @@ target_sources(utils
         "${CMAKE_SOURCE_DIR}/utils/rcu_map.cc"
         "${CMAKE_SOURCE_DIR}/utils/pcap.cc"
         "${CMAKE_SOURCE_DIR}/utils/debug.cc"
+        "${CMAKE_SOURCE_DIR}/utils/timer_queue.cc"
         )
 target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_queue
 

@@ -6,6 +6,9 @@
 #define DPI_TEST_BASE_H
 
 #include <inttypes.h>
+#include "utils/timer_queue.h"
+#include "urcu/hlist.h"
+#include "defs.h"
 
 //分支转移的信息提供给编译器，减少指令跳转带来的性能下降
 #ifndef likely
@@ -14,5 +17,36 @@
 #ifndef unlikely
 # define unlikely(x)        __builtin_expect(!!(x), 0)
 #endif
+
+
+typedef struct rate_limiter_ {
+    uint16_t dur;             // in second
+    uint16_t dur_cnt_limit;
+    uint32_t start;
+    uint32_t cnt;
+    uint32_t total_drop;
+    uint32_t total_pass;
+} dp_rate_limter_t;
+
+typedef struct dp_thread_data_ {
+    int epoll_fd;
+    struct cds_hlist_head ctx_list;
+    timer_queue_t ctx_free_list;
+    struct dp_context_ *ctx_inline;
+    pthread_mutex_t ctrl_dp_lock;
+    int ctrl_req_evfd;
+    uint32_t ctrl_req;
+#define MAX_LOG_ENTRIES 128
+#define LOG_ENTRY_SIZE (sizeof(DPMsgHdr) + sizeof(DPMsgThreatLog))
+    uint32_t log_writer;
+    uint32_t log_reader;
+    uint8_t log_ring[MAX_LOG_ENTRIES][LOG_ENTRY_SIZE];
+    rcu_map_t conn4_map[2];
+    uint32_t conn4_map_cnt[2];
+    dp_rate_limter_t conn4_rl;
+#define CONNECT_RL_DUR  2
+#define CONNECT_RL_CNT  400
+    uint32_t conn4_map_cur;
+} dp_thread_data_t;
 
 #endif //DPI_TEST_BASE_H

@@ -5,6 +5,7 @@
 #include <cstdarg>
 #include <cstring>
 #include <iostream>
+#include "config.h"
 #include "apis.h"
 #include "debug.h"
 
@@ -14,11 +15,11 @@ uint32_t g_debug_levels = DBG_DEFAULT;
 void debug_log_no_filter(bool print_ts, const char *fmt, ...)
 {
     std::cout << "print_ts = " << print_ts << std::endl;
-//    va_list args;
-//
-//    va_start(args, fmt);
-//    g_callback.debug(print_ts, fmt, args);
-//    va_end(args);
+    va_list args;
+
+    va_start(args, fmt);
+    g_callback.debug(print_ts, fmt, args);
+    va_end(args);
 }
 
 uint32_t debug_name2level(const char *name)
