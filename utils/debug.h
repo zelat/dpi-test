@@ -1,6 +1,7 @@
 //
 // Created by tanchao on 2022/6/24.
 //
+#include "base.h"
 
 #ifndef DPI_TEST_DEBUG_H
 #define DPI_TEST_DEBUG_H
@@ -34,13 +35,10 @@
 #define DBG_DEFAULT (DBG_INIT|DBG_ERROR)
 
 extern uint32_t g_debug_levels;
-
-#define DEBUG_LOG_NO_FILTER(format, args...) \
-debug_log(true, "%s: " format, __FUNCTION__, ##args)
+extern io_callback_t g_callback;
 
 #define IF_DEBUG(level) \
 if (unlikely(g_debug_levels & (level)))
-
 #define DEBUG_LEVEL(level, format, args...) \
 IF_DEBUG(level) { debug_log_no_filter(true, "%s: " format, __FUNCTION__,  ##args); }
 #define DEBUG_ERROR(level, format, args...) \
@@ -65,4 +63,6 @@ IF_DEBUG(DBG_DETECT) { debug_log_no_filter(true, "%s: " format, __FUNCTION__, ##
 #define DEBUG_FUNC_ENTRY(level) \
 IF_DEBUG(level) { debug_log_no_filter(true, "%s: enter\n", __FUNCTION__); }
 
+void debug_log_no_filter(bool print_ts, const char *fmt, ...);
+uint32_t debug_name2level(const char *name);
 #endif //DPI_TEST_DEBUG_H

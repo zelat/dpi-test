@@ -15,12 +15,14 @@
 #include "base/dpi_hs.h"
 #include "utils/pcap.h"
 #include "apis.h"
+#include "utils/debug.h"
 
+char *g_in_iface;
 io_config_t g_config;
 pthread_mutex_t g_debug_lock;
 rcu_map_t g_ep_map;
 struct timeval g_now;
-time_t get_current_time();
+static time_t get_current_time();
 
 using std::ifstream;
 using std::endl;
@@ -109,48 +111,49 @@ static int  test_dpi_hyperscan(int argc, char **argv){
     return 0;
 }
 
-static inline int debug_ts(FILE *logfp)
-{
-    struct timeval now;
-    struct tm *tm;
 
-    if (g_now.tv_sec == 0) {
-        //gettimeofday(&now, NULL);
-        time_t t = get_current_time();
-        tm = localtime((const time_t *)&t);
-    } else {
-        now = g_now;
-        tm = localtime(&now.tv_sec);
-    }
 
-    return fprintf(logfp, "%04d-%02d-%02dT%02d:%02d:%02d|DEBU|%s|",
-                   tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
-                   tm->tm_hour, tm->tm_min, tm->tm_sec, THREAD_NAME);
-}
-
-static int debug_stdout(bool print_ts, const char *fmt, va_list args)
-{
-    int len = 0;
-
-    pthread_mutex_lock(&g_debug_lock);
-    if (print_ts) {
-        len = debug_ts(stdout);
-    }
-    len += vprintf(fmt, args);
-    pthread_mutex_unlock(&g_debug_lock);
-
-    return len;
-}
 
 int main(int argc, char **argv) {
-    //初始化线程互斥锁
-    pthread_mutex_init(&g_debug_lock, NULL);
-    rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
-    //Initalize subnet4 & subnet6 RCU LIST
-    CDS_LIST_HEAD(g_subnet4_list);
-    CDS_LIST_HEAD(g_subnet6_list);
+    int arg = 0;
+    while (arg != -1) {
+        arg = getopt(argc, argv, "hcd:i:j:n:p:s");
+        switch (arg) {
+        case -1:
+            break;
+        case 'i':
+            g_in_iface = strdup(optarg);
+            g_config.promisc = true;
+            break;
+        case 'd':
+            if (strcasecmp(optarg, "none") == 0) {
+                g_debug_levels = 0;
+            } else if (optarg[0] == '-') {
+                g_debug_levels &= ~debug_name2level(optarg + 1);
+            } else {
+                g_debug_levels |= debug_name2level(optarg);
+            }
+                break;
+        default:
+            exit(-2);
+        }
+    }
 
-    init_dummy_ep(&g_config.dummy_ep);
-    g_config.dummy_mac.ep = &g_config.dummy_ep;
+    setlinebuf(stdout);
 
+    cout << "g_debug_levels = " << g_debug_levels << endl;
+    int ret = net_run(g_in_iface);
+    cout << ret << endl;
+    return ret;
+//    //初始化线程互斥锁
+//    pthread_mutex_init(&g_debug_lock, NULL);
+//    rcu_map_init(&g_ep_map, 1, offsetof(io_mac_t, node), dp_ep_match, dp_ep_hash);
+//    //Initalize subnet4 & subnet6 RCU LIST
+//    CDS_LIST_HEAD(g_subnet4_list);
+//    CDS_LIST_HEAD(g_subnet6_list);
+//
+//    init_dummy_ep(&g_config.dummy_ep);
+//    g_config.dummy_mac.ep = &g_config.dummy_ep;
+//
 }
+

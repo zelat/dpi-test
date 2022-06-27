@@ -14,6 +14,9 @@
 #include "jansson.h"
 #include "utils/debug.h"
 
+__thread int THREAD_ID;
+__thread char THREAD_NAME[32];
+
 class dpi_callback {
 private:
     pthread_mutex_t g_debug_lock;
@@ -24,12 +27,8 @@ private:
     int debug_ts(FILE *logfp);
 public:
     int debug(bool print_ts, const char *fmt, va_list args);
-    int send_ctrl_json (json_t *root);
-    int send_ctrl_binary (void *buf, int len);
-    virtual int send_packet(io_ctx_t *ctx, uint8_t *data, int len);
-    virtual int threat_log (DPMsgThreatLog *log);
-    virtual int traffic_log (DPMsgSession *log);
-    virtual int connect_report (DPMsgSession *log, int count_session, int count_violate);
+    int ctrl_send_json (json_t *root);
+    int ctrl_send_binary (void *buf, int len);
 };
 
 class dpi_callback_pcap: private dpi_callback{

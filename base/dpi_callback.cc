@@ -35,7 +35,7 @@ int dpi_callback::debug(bool print_ts, const char *fmt, va_list args) {
     return len;
 }
 
-int dpi_callback::send_ctrl_json(json_t *root) {
+int dpi_callback::ctrl_send_json(json_t *root) {
     if (root == NULL) {
         DEBUG_ERROR(DBG_CTRL, "Fail to create json object.\n");
         return -1;
@@ -61,7 +61,7 @@ int dpi_callback::send_ctrl_json(json_t *root) {
     return sent;
 }
 
-int dpi_callback::send_ctrl_binary(void *buf, int len) {
+int dpi_callback::ctrl_send_binary(void *buf, int len) {
     return 0;
 }
 

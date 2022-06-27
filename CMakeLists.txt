@@ -36,6 +36,12 @@ target_sources(utils
         )
 target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_queue
 
+add_library(service "")
+target_sources(service
+        PRIVATE
+        "${CMAKE_SOURCE_DIR}/service/ctrl.cc"
+        )
+target_link_libraries(service utils)
 
 add_library(network "")
 target_sources(network
@@ -46,7 +52,8 @@ target_sources(network
         "${CMAKE_SOURCE_DIR}/base/dpi_callback.cc"
         )
 target_link_libraries(network hs pcap jansson)
+target_link_libraries(network utils)
 
 add_executable(dpi_test main.cpp)
-target_link_libraries(dpi_test network utils)
+target_link_libraries(dpi_test network service utils)
 #target_link_libraries(dpi_test hs pcap network utils)
