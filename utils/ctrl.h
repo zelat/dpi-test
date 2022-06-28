@@ -5,6 +5,7 @@
 #ifndef DPI_TEST_CTRL_H
 #define DPI_TEST_CTRL_H
 
+#include <iostream>
 #include <csignal>
 #include <cstdint>
 #include "config.h"

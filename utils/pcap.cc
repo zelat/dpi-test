@@ -102,6 +102,7 @@ int net_run(const char *in_iface) {
     // Calculate number of dp threads
     if (g_dp_threads == 0) {
         g_dp_threads = count_cpu();
+        std::cout << "count_cpu = " << g_dp_threads << std::endl;
     }
     if (g_dp_threads > MAX_DP_THREADS) {
         g_dp_threads = MAX_DP_THREADS;

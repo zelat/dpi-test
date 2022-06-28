@@ -3,9 +3,17 @@
 //
 
 #include "callback.h"
-#include "config.h"
 
-int callback::debug_ts(FILE *logfp) {
+
+__thread int THREAD_ID;
+__thread char THREAD_NAME[32];
+
+pthread_mutex_t g_debug_lock;
+struct timeval g_now;
+int g_ctrl_fd;
+struct sockaddr_un g_client_addr;
+
+int debug_ts(FILE *logfp) {
     struct timeval now;
     struct tm *tm;
 
@@ -22,7 +30,7 @@ int callback::debug_ts(FILE *logfp) {
                    tm->tm_hour, tm->tm_min, tm->tm_sec, THREAD_NAME);
 }
 
-int callback::debug(bool print_ts, const char *fmt, va_list args) {
+int debug_stdout(bool print_ts, const char *fmt, va_list args) {
     int len = 0;
 
     pthread_mutex_lock(&g_debug_lock);
@@ -35,7 +43,39 @@ int callback::debug(bool print_ts, const char *fmt, va_list args) {
     return len;
 }
 
-int callback::ctrl_send_json(json_t *root) {
+int debug_file(bool print_ts, const char *fmt, va_list args)
+{
+    static FILE *logfp = NULL;
+
+    if (logfp == NULL) {
+        logfp = fopen(DEBUG_FILE, "a");
+
+        if (logfp != NULL) {
+            int flags;
+
+            if ((flags = fcntl(fileno(logfp), F_GETFL, 0)) == -1) {
+                flags = 0;
+            }
+            fcntl(fileno(logfp), F_SETFL, flags | O_NONBLOCK);
+        } else {
+            return debug_stdout(print_ts, fmt, args);
+        }
+    }
+
+    int len = 0;
+
+    pthread_mutex_lock(&g_debug_lock);
+    if (print_ts) {
+        len = debug_ts(logfp);
+    }
+    len += vfprintf(logfp, fmt, args);
+    fflush(logfp);
+    pthread_mutex_unlock(&g_debug_lock);
+
+    return len;
+}
+
+int ctrl_send_json(json_t *root) {
     if (root == NULL) {
         DEBUG_ERROR(DBG_CTRL, "Fail to create json object.\n");
         return -1;
@@ -61,7 +101,7 @@ int callback::ctrl_send_json(json_t *root) {
     return sent;
 }
 
-int callback::ctrl_send_binary(void *buf, int len) {
+int ctrl_send_binary(void *buf, int len) {
     return 0;
 }
 

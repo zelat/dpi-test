@@ -16,12 +16,11 @@
 #include "utils/pcap.h"
 #include "apis.h"
 #include "utils/debug.h"
+#include "utils/callback.h"
 
 char *g_in_iface;
 io_config_t g_config;
-pthread_mutex_t g_debug_lock;
 rcu_map_t g_ep_map;
-struct timeval g_now;
 
 using std::ifstream;
 using std::endl;
@@ -136,6 +135,9 @@ int main(int argc, char **argv) {
     }
 
     setlinebuf(stdout);
+
+    g_callback.debug = debug_stdout;
+//    g_callback.send_packet = dp_send_packet;
 
     cout << "g_debug_levels = " << g_debug_levels << endl;
     int ret = net_run(g_in_iface);

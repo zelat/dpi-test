@@ -29,6 +29,7 @@ uint32_t ctrl::conn4_hash(const void *key)
 
 ctrl::ctrl() {}
 
+//初始化dp线程结构
 void ctrl::dp_ctrl_init_thread_data(void)
 {
     int thr_id, i;

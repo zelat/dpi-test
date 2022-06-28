@@ -157,6 +157,7 @@
 #define DP_KIND_KEEP_ALIVE     10
 #define DP_KIND_FQDN_UPDATE    11
 
+//dp message header
 typedef struct {
     uint8_t  Kind;
     uint8_t  More;

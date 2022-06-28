@@ -14,7 +14,6 @@ uint32_t g_debug_levels = DBG_DEFAULT;
 
 void debug_log_no_filter(bool print_ts, const char *fmt, ...)
 {
-    std::cout << "print_ts = " << print_ts << std::endl;
     va_list args;
 
     va_start(args, fmt);

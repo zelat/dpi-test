@@ -28,13 +28,14 @@ typedef struct rate_limiter_ {
     uint32_t total_pass;
 } dp_rate_limter_t;
 
+//定义dp线程结构
 typedef struct dp_thread_data_ {
-    int epoll_fd;
-    struct cds_hlist_head ctx_list;
-    timer_queue_t ctx_free_list;
-    struct dp_context_ *ctx_inline;
-    pthread_mutex_t ctrl_dp_lock;
-    int ctrl_req_evfd;
+    int epoll_fd;                      //epoll句柄
+    struct cds_hlist_head ctx_list;    //使用线性列表作为列表头
+    timer_queue_t ctx_free_list;       //时间队列
+    struct dp_context_ *ctx_inline;    //
+    pthread_mutex_t ctrl_dp_lock;      //线程互斥锁
+    int ctrl_req_evfd;                 //控制器请求句柄
     uint32_t ctrl_req;
 #define MAX_LOG_ENTRIES 128
 #define LOG_ENTRY_SIZE (sizeof(DPMsgHdr) + sizeof(DPMsgThreatLog))
