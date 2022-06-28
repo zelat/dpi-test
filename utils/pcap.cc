@@ -7,12 +7,12 @@
 #include "config.h"
 #include "debug.h"
 #include "timer_queue.h"
-#include "service/ctrl.h"
+#include "ctrl.h"
 
 int g_running; // dp是否running
 int g_dp_threads = 0 ; //初始化dp线程数
 
-inline uint32_t sdbm_hash(register const uint8_t *a, register int len) {
+uint32_t sdbm_hash(register const uint8_t *a, register int len) {
     register uint32_t hash = 0;
 
     while (len > 0) {
@@ -110,7 +110,7 @@ int net_run(const char *in_iface) {
     //获取线程数，一个cpu分配一个线程
     std::cout << "g_dp_threads = " << g_dp_threads << std::endl;
 
-    ctrl ctrl;
-    ctrl.dp_ctrl_init_thread_data();
+    ctrl cl;
+    cl.dp_ctrl_init_thread_data();
     return 0;
 }

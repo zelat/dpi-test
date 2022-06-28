@@ -2,8 +2,8 @@
 // Created by tanchao on 2022/6/24.
 //
 
-#ifndef DPI_TEST_DPI_CALLBACK_H
-#define DPI_TEST_DPI_CALLBACK_H
+#ifndef DPI_TEST_CALLBACK_H
+#define DPI_TEST_CALLBACK_H
 
 #include <cstring>
 #include <cstdio>
@@ -17,7 +17,7 @@
 __thread int THREAD_ID;
 __thread char THREAD_NAME[32];
 
-class dpi_callback {
+class callback {
 private:
     pthread_mutex_t g_debug_lock;
     struct timeval g_now;
@@ -30,7 +30,7 @@ public:
     int ctrl_send_binary (void *buf, int len);
 };
 
-class dpi_callback_pcap: private dpi_callback{
+class dpi_callback_pcap: private callback{
 public:
     int send_packet(io_ctx_t *ctx, uint8_t *data, int len);
     int threat_log (DPMsgThreatLog *log);
@@ -38,7 +38,7 @@ public:
     int connect_report (DPMsgSession *log, int count_session, int count_violate);
 };
 
-class dpi_callback_dp: private dpi_callback{
+class dpi_callback_dp: private callback{
 public:
     int send_packet(io_ctx_t *ctx, uint8_t *data, int len);
     int threat_log (DPMsgThreatLog *log);
@@ -46,4 +46,4 @@ public:
     int connect_report (DPMsgSession *log, int count_session, int count_violate);
 };
 
-#endif //DPI_TEST_DPI_CALLBACK_H
+#endif //DPI_TEST_CALLBACK_H

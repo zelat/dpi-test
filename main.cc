@@ -22,7 +22,6 @@ io_config_t g_config;
 pthread_mutex_t g_debug_lock;
 rcu_map_t g_ep_map;
 struct timeval g_now;
-static time_t get_current_time();
 
 using std::ifstream;
 using std::endl;
@@ -110,9 +109,6 @@ static int  test_dpi_hyperscan(int argc, char **argv){
 
     return 0;
 }
-
-
-
 
 int main(int argc, char **argv) {
     int arg = 0;

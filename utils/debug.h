@@ -37,6 +37,9 @@
 extern uint32_t g_debug_levels;
 extern io_callback_t g_callback;
 
+static uint32_t g_seconds;
+static time_t g_start_time;
+
 #define IF_DEBUG(level) \
 if (unlikely(g_debug_levels & (level)))
 #define DEBUG_LEVEL(level, format, args...) \
@@ -65,4 +68,5 @@ IF_DEBUG(level) { debug_log_no_filter(true, "%s: enter\n", __FUNCTION__); }
 
 void debug_log_no_filter(bool print_ts, const char *fmt, ...);
 uint32_t debug_name2level(const char *name);
+time_t get_current_time();
 #endif //DPI_TEST_DEBUG_H

@@ -2,10 +2,10 @@
 // Created by tanchao on 2022/6/24.
 //
 
-#include "dpi_callback.h"
+#include "callback.h"
 #include "config.h"
 
-int dpi_callback::debug_ts(FILE *logfp) {
+int callback::debug_ts(FILE *logfp) {
     struct timeval now;
     struct tm *tm;
 
@@ -22,7 +22,7 @@ int dpi_callback::debug_ts(FILE *logfp) {
                    tm->tm_hour, tm->tm_min, tm->tm_sec, THREAD_NAME);
 }
 
-int dpi_callback::debug(bool print_ts, const char *fmt, va_list args) {
+int callback::debug(bool print_ts, const char *fmt, va_list args) {
     int len = 0;
 
     pthread_mutex_lock(&g_debug_lock);
@@ -35,7 +35,7 @@ int dpi_callback::debug(bool print_ts, const char *fmt, va_list args) {
     return len;
 }
 
-int dpi_callback::ctrl_send_json(json_t *root) {
+int callback::ctrl_send_json(json_t *root) {
     if (root == NULL) {
         DEBUG_ERROR(DBG_CTRL, "Fail to create json object.\n");
         return -1;
@@ -61,7 +61,7 @@ int dpi_callback::ctrl_send_json(json_t *root) {
     return sent;
 }
 
-int dpi_callback::ctrl_send_binary(void *buf, int len) {
+int callback::ctrl_send_binary(void *buf, int len) {
     return 0;
 }
 

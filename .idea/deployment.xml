@@ -16,7 +16,6 @@
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-neuvector" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-neuvector" />
           </excludedPaths>
         </serverdata>
       </paths>

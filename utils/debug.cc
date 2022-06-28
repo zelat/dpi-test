@@ -54,3 +54,8 @@ uint32_t debug_name2level(const char *name)
 
     return 0;
 }
+
+time_t get_current_time()
+{
+    return (g_start_time + g_seconds);
+}
