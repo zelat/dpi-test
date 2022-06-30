@@ -16,7 +16,7 @@ include(cmake/Modules/pcap-1.9.0.cmake)
 include(cmake/Modules/userspace-rcu-0.13.1.cmake)
 include(cmake/Modules/jansson-2.14.cmake)
 include(cmake/Modules/libnetfilter_queue-1.0.5.cmake)
-
+include(cmake/Modules/pcre2-10.40.cmake)
 #编译时候的选项
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -Wno-unused-result -Wno-unused-function -fstrict-aliasing -Wstrict-aliasing -g")
 
@@ -34,6 +34,7 @@ target_sources(utils
         "${CMAKE_SOURCE_DIR}/utils/rcu_map.cc"
         "${CMAKE_SOURCE_DIR}/utils/debug.cc"
         "${CMAKE_SOURCE_DIR}/utils/timer_queue.cc"
+        "${CMAKE_SOURCE_DIR}/utils/timer_wheel.cc"
         "${CMAKE_SOURCE_DIR}/utils/asm.cc"
         "${CMAKE_SOURCE_DIR}/utils/asn1.cc"
         "${CMAKE_SOURCE_DIR}/utils/bitmap.cc"
@@ -50,6 +51,7 @@ target_sources(sig
         "${CMAKE_SOURCE_DIR}/base/sig/dpi_sig.cc"
         )
 target_link_libraries(sig utils)
+target_link_libraries(sig pcre2)
 
 add_library(parsers "")
 target_sources(parsers
@@ -82,8 +84,8 @@ add_library(services "")
 target_sources(services
         PRIVATE
         "${CMAKE_SOURCE_DIR}/services/ctrl.cc"
-        "${CMAKE_SOURCE_DIR}/utils/callback.cc"
-        "${CMAKE_SOURCE_DIR}/utils/pcap.cc"
+        "${CMAKE_SOURCE_DIR}/services/callback.cc"
+        "${CMAKE_SOURCE_DIR}/services/pcap.cc"
         )
 target_link_libraries(services utils)
 

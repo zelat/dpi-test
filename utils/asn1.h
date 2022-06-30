@@ -52,7 +52,7 @@ typedef enum {
 
 typedef struct asn1_ {
     int length;
-    uint8_t class;
+    uint8_t clas;
     uint8_t tag;
     bool constructed;
 } asn1_t;

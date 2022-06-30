@@ -3,8 +3,8 @@
 
 #include "utils/bits.h"
 #include "urcu/list.h"
-#include "dpi/sig/dpi_sig_share.h"
-#include "dpi/sig/dpi_hyperscan_common.h"
+#include "base/sig/dpi_sig_share.h"
+#include "base/sig/dpi_hs_search.h"
 
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <pcre2.h>

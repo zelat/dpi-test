@@ -9,6 +9,7 @@
 #include "utils/timer_queue.h"
 #include "urcu/hlist.h"
 #include "defs.h"
+#include "utils/rcu_map.h"
 
 #define max(x,y) (((x)>(y))?(x):(y))
 #define min(x,y) (((x)<(y))?(x):(y))

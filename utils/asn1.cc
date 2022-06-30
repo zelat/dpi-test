@@ -133,7 +133,7 @@ int asn1_read_header(asn1_t *asn1, buf_t *buf)
     if (buf->len < 2 || buf->seq >= buf->len) return ASN1_ERR_FORMAT;
 
     uint8_t ch = buf->ptr[buf->seq];
-    asn1->class = ASN1_GET_CLASS(ch);
+    asn1->clas = ASN1_GET_CLASS(ch);
     asn1->constructed = ASN1_IS_CONSTRUCTED(ch);
     asn1->tag = ASN1_GET_TAG(ch);
 

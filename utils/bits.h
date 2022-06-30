@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <cstring>
 
 #define INDEX2MASK(index) (1 << (index))
 

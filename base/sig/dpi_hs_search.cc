@@ -41,7 +41,7 @@ dpi_hyperscan_pm_t * dpi_hs_search::dpi_hs_create(){
         return NULL;
     }
     pm->hs_patterns_cap = INITIAL_PATTERN_ARRAY_ALLOC_SIZE;
-    pm->hs_patterns = calloc(1, sizeof(dpi_hyperscan_pattern_t) * pm->hs_patterns_cap);
+    pm->hs_patterns = (dpi_hyperscan_pattern_t *)calloc(1, sizeof(dpi_hyperscan_pattern_t) * pm->hs_patterns_cap);
     if (!pm->hs_patterns) {
         DEBUG_LOG(DBG_DETECT, NULL, "Unable to allocate memory for hyperscan pattern match sigature!\n");
         free(pm);
