@@ -13,10 +13,12 @@
 #include "base/dpi_adapter.h"
 #include "base/dpi_hs_db.h"
 #include "base/dpi_hs.h"
-#include "utils/pcap.h"
+#include "services/pcap.h"
 #include "apis.h"
 #include "utils/debug.h"
-#include "utils/callback.h"
+#include "services/callback.h"
+#include "base/dpi_entry.h"
+#include "base/sig/dpi_hs_search.h"
 
 char *g_in_iface;
 io_config_t g_config;
@@ -136,10 +138,14 @@ int main(int argc, char **argv) {
 
     setlinebuf(stdout);
 
+    dpi_hs_search dpiHsSearch();
+
+
     g_callback.debug = debug_stdout;
-//    g_callback.send_packet = dp_send_packet;
+    dpi_entry dpiEntry(&g_callback, &g_config);
 
     cout << "g_debug_levels = " << g_debug_levels << endl;
+
     int ret = net_run(g_in_iface);
     cout << "ret = " << ret << endl;
     return ret;

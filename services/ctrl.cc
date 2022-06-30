@@ -4,6 +4,7 @@
 
 #include "ctrl.h"
 #include "utils/debug.h"
+#include "utils/helper.h"
 
 int ctrl::conn4_match(struct cds_lfht_node *ht_node, const void *key)
 {

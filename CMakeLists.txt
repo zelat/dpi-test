@@ -32,24 +32,77 @@ add_library(utils "")
 target_sources(utils
         PRIVATE
         "${CMAKE_SOURCE_DIR}/utils/rcu_map.cc"
-        "${CMAKE_SOURCE_DIR}/utils/pcap.cc"
         "${CMAKE_SOURCE_DIR}/utils/debug.cc"
         "${CMAKE_SOURCE_DIR}/utils/timer_queue.cc"
-        "${CMAKE_SOURCE_DIR}/utils/ctrl.cc"
-        "${CMAKE_SOURCE_DIR}/utils/callback.cc"
+        "${CMAKE_SOURCE_DIR}/utils/asm.cc"
+        "${CMAKE_SOURCE_DIR}/utils/asn1.cc"
+        "${CMAKE_SOURCE_DIR}/utils/bitmap.cc"
+        "${CMAKE_SOURCE_DIR}/utils/helper.cc"
+        "${CMAKE_SOURCE_DIR}/utils/tree.cc"
         )
 target_link_libraries(utils urcu urcu-cds) #urcu-cds rt stdc++ m mnl netfilter_queue
 
-add_library(network "")
-target_sources(network
+add_library(sig "")
+target_sources(sig
+        PRIVATE
+        "${CMAKE_SOURCE_DIR}/base/sig/dpi_hs_search.cc"
+        "${CMAKE_SOURCE_DIR}/base/sig/dpi_search.cc"
+        "${CMAKE_SOURCE_DIR}/base/sig/dpi_sig.cc"
+        )
+target_link_libraries(sig utils)
+
+add_library(parsers "")
+target_sources(parsers
+        PRIVATE
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_cassandra.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_couchbase.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_dhcp.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_dns.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_echo.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_grpc.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_http.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_kafka.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_mongodb.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_mysql.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_ntp.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_postgresql.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_redis.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_spark.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_sqlinjection.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_ssh.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_ssl.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_tds.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_tftp.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_tns.cc"
+        "${CMAKE_SOURCE_DIR}/base/parsers/dpi_zookeeper.cc"
+        )
+target_link_libraries(parsers utils)
+
+add_library(services "")
+target_sources(services
+        PRIVATE
+        "${CMAKE_SOURCE_DIR}/services/ctrl.cc"
+        "${CMAKE_SOURCE_DIR}/utils/callback.cc"
+        "${CMAKE_SOURCE_DIR}/utils/pcap.cc"
+        )
+target_link_libraries(services utils)
+
+
+add_library(base "")
+target_sources(base
         PRIVATE
         "${CMAKE_SOURCE_DIR}/base/dpi_adapter.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs.cc"
         "${CMAKE_SOURCE_DIR}/base/dpi_hs_db.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_entry.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_debug.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_packet.cc"
+        "${CMAKE_SOURCE_DIR}/base/dpi_session.cc"
         )
-target_link_libraries(network hs pcap jansson)
-target_link_libraries(network utils)
+target_link_libraries(base hs pcap jansson)
+target_link_libraries(base utils parsers sig)
 
 add_executable(dpi_test main.cc)
-target_link_libraries(dpi_test network utils netfilter_queue)
+target_link_libraries(dpi_test base utils netfilter_queue)
+target_link_libraries(services)
 #target_link_libraries(dpi_test hs pcap network utils)

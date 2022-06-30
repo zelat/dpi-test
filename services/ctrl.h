@@ -9,7 +9,7 @@
 #include <csignal>
 #include <cstdint>
 #include "config.h"
-#include "utils/pcap.h"
+#include "pcap.h"
 #include "base.h"
 #include "defs.h"
 

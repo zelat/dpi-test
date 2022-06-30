@@ -10,6 +10,9 @@
 #include "urcu/hlist.h"
 #include "defs.h"
 
+#define max(x,y) (((x)>(y))?(x):(y))
+#define min(x,y) (((x)<(y))?(x):(y))
+
 //分支转移的信息提供给编译器，减少指令跳转带来的性能下降
 #ifndef likely
 # define likely(x)        __builtin_expect(!!(x), 1)

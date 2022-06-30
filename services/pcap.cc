@@ -5,24 +5,14 @@
 #include <csignal>
 #include "pcap.h"
 #include "config.h"
-#include "debug.h"
-#include "timer_queue.h"
-#include "ctrl.h"
+#include "utils/debug.h"
+#include "utils/timer_queue.h"
+#include "services/ctrl.h"
+#include "utils/helper.h"
 
 int g_running; // dp是否running
 int g_dp_threads = 0 ; //初始化dp线程数
 
-uint32_t sdbm_hash(register const uint8_t *a, register int len) {
-    register uint32_t hash = 0;
-
-    while (len > 0) {
-        hash = *a + (hash << 6) + (hash << 16) - hash;
-        a++;
-        len--;
-    }
-
-    return hash;
-}
 
 int dp_ep_match(struct cds_lfht_node *ht_node, const void *key) {
     io_mac_t *ht_mac = STRUCT_OF(ht_node, io_mac_t, node);
@@ -102,7 +92,6 @@ int net_run(const char *in_iface) {
     // Calculate number of dp threads
     if (g_dp_threads == 0) {
         g_dp_threads = count_cpu();
-        std::cout << "count_cpu = " << g_dp_threads << std::endl;
     }
     if (g_dp_threads > MAX_DP_THREADS) {
         g_dp_threads = MAX_DP_THREADS;
